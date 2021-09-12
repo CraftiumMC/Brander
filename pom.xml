@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>net.craftium</groupId>
+    <artifactId>brander</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    <packaging>jar</packaging>
+
+    <name>Brander</name>
+    <url>https://craftium.net</url>
+
+    <properties>
+        <java.version>11</java.version>
+        <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
+
+        <main>net.craftium.brander.Brander</main>
+    </properties>
+
+    <repositories>
+        <repository>
+            <id>velocitypowered-repo</id>
+            <url>https://nexus.velocitypowered.com/repository/maven-public/</url>
+        </repository>
+    </repositories>
+
+    <dependencies>
+        <dependency>
+            <groupId>com.velocitypowered</groupId>
+            <artifactId>velocity</artifactId>
+            <version>3.0.0</version>
+            <scope>system</scope>
+            <systemPath>${project.basedir}/libs/velocity.jar</systemPath>
+        </dependency>
+
+        <dependency>
+            <groupId>space.arim.dazzleconf</groupId>
+            <artifactId>dazzleconf-ext-snakeyaml</artifactId>
+            <version>1.2.1</version>
+
+            <exclusions>
+                <exclusion>
+                    <groupId>org.yaml</groupId>
+                    <artifactId>snakeyaml</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <dependency>
+            <groupId>net.kyori</groupId>
+            <artifactId>adventure-text-minimessage</artifactId>
+            <version>4.1.0-SNAPSHOT</version>
+
+            <exclusions>
+                <exclusion>
+                    <groupId>net.kyori</groupId>
+                    <artifactId>adventure-api</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <resources>
+            <resource>
+                <directory>${project.basedir}/src/main/resources</directory>
+                <filtering>true</filtering>
+            </resource>
+        </resources>
+
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-compiler-plugin</artifactId>
+                <version>3.8.1</version>
+
+                <configuration>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
+                </configuration>
+            </plugin>
+
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-shade-plugin</artifactId>
+                <version>3.2.4</version>
+
+                <configuration>
+                    <createDependencyReducedPom>false</createDependencyReducedPom>
+                    <minimizeJar>true</minimizeJar>
+
+                    <filters>
+                        <filter>
+                            <artifact>*:*</artifact>
+
+                            <excludes>
+                                <exclude>META-INF/*</exclude>
+                                <exclude>module-info.class</exclude>
+                            </excludes>
+                        </filter>
+                    </filters>
+
+                    <relocations>
+                        <relocation>
+                            <pattern>space.arim.dazzleconf</pattern>
+                            <shadedPattern>net.craftium.brander.libs.dazzleconf</shadedPattern>
+                        </relocation>
+
+                        <relocation>
+                            <pattern>net.kyori.adventure.text.minimessage</pattern>
+                            <shadedPattern>net.craftium.brander.libs.minimessage</shadedPattern>
+                        </relocation>
+                    </relocations>
+                </configuration>
+
+                <executions>
+                    <execution>
+                        <phase>package</phase>
+
+                        <goals>
+                            <goal>shade</goal>
+                        </goals>
+                    </execution>
+                </executions>
+            </plugin>
+        </plugins>
+    </build>
+</project>

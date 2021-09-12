@@ -1,0 +1,9 @@
+{
+  "id": "brander",
+  "name": "Brander",
+  "version": "${project.version}",
+  "url": "${url}",
+  "description": "Modify the server's brand",
+  "authors": ["Artuto"],
+  "main": "${main}"
+}
