@@ -42,7 +42,7 @@ public class BrandUtils
 
     private static String format(String brand)
     {
-        Component text = MINI_MESSAGE.parse(brand);
+        Component text = MINI_MESSAGE.deserialize(brand);
         return SERIALIZER.serialize(text) + (SECTION_CHAR + "r");
     }
 
@@ -52,7 +52,7 @@ public class BrandUtils
         connectedPlayer.getConnection().write(brand);
     }
 
-    private static final MiniMessage MINI_MESSAGE = MiniMessage.get();
+    private static final MiniMessage MINI_MESSAGE = MiniMessage.miniMessage();
     private static final LegacyComponentSerializer SERIALIZER = legacySection();
     public static final ChannelIdentifier CHANNEL = MinecraftChannelIdentifier.forDefaultNamespace("brand");
 }

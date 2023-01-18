@@ -44,10 +44,12 @@ public class PluginMessageHook extends PluginMessage
             Field packetClassToIdField = StateRegistry.PacketRegistry.ProtocolRegistry.class.getDeclaredField("packetClassToId");
             packetClassToIdField.setAccessible(true);
 
+            Field clientboundField = StateRegistry.class.getDeclaredField("clientbound");
+            clientboundField.setAccessible(true);
+
             //noinspection unchecked
-            Map<ProtocolVersion, StateRegistry.PacketRegistry.ProtocolRegistry> versions =
-                    (Map<ProtocolVersion, StateRegistry.PacketRegistry.ProtocolRegistry>)
-                            versionsField.get(StateRegistry.PLAY.clientbound);
+            var versions = (Map<ProtocolVersion, StateRegistry.PacketRegistry.ProtocolRegistry>)
+                    versionsField.get(clientboundField.get(StateRegistry.PLAY));
 
             BiConsumer<? super ProtocolVersion, ? super StateRegistry.PacketRegistry.ProtocolRegistry>
                     consumer = (version, registry) ->

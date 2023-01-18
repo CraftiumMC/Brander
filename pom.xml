@@ -14,7 +14,7 @@
     <url>https://craftium.net</url>
 
     <properties>
-        <java.version>11</java.version>
+        <java.version>17</java.version>
         <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 
         <main>net.craftium.brander.Brander</main>
@@ -31,7 +31,7 @@
         <dependency>
             <groupId>com.velocitypowered</groupId>
             <artifactId>velocity</artifactId>
-            <version>3.0.0</version>
+            <version>3.2.0-SNAPSHOT</version>
             <scope>system</scope>
             <systemPath>${project.basedir}/libs/velocity.jar</systemPath>
         </dependency>
@@ -45,19 +45,6 @@
                 <exclusion>
                     <groupId>org.yaml</groupId>
                     <artifactId>snakeyaml</artifactId>
-                </exclusion>
-            </exclusions>
-        </dependency>
-
-        <dependency>
-            <groupId>net.kyori</groupId>
-            <artifactId>adventure-text-minimessage</artifactId>
-            <version>4.1.0-SNAPSHOT</version>
-
-            <exclusions>
-                <exclusion>
-                    <groupId>net.kyori</groupId>
-                    <artifactId>adventure-api</artifactId>
                 </exclusion>
             </exclusions>
         </dependency>
@@ -86,7 +73,7 @@
             <plugin>
                 <groupId>org.apache.maven.plugins</groupId>
                 <artifactId>maven-shade-plugin</artifactId>
-                <version>3.2.4</version>
+                <version>3.4.1</version>
 
                 <configuration>
                     <createDependencyReducedPom>false</createDependencyReducedPom>
@@ -107,11 +94,6 @@
                         <relocation>
                             <pattern>space.arim.dazzleconf</pattern>
                             <shadedPattern>net.craftium.brander.libs.dazzleconf</shadedPattern>
-                        </relocation>
-
-                        <relocation>
-                            <pattern>net.kyori.adventure.text.minimessage</pattern>
-                            <shadedPattern>net.craftium.brander.libs.minimessage</shadedPattern>
                         </relocation>
                     </relocations>
                 </configuration>
